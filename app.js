@@ -2,9 +2,12 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const users = require('./routes/api/users');
 const tweets = require('./routes/api/tweets');
 const db = require('./config/keys').mongoURI;
+
+require('./config/passport')(passport);
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -20,7 +23,4 @@ app.use(bodyParser.json());
 app.use('/api/users', users);
 app.use('/api/tweets', tweets);
 
-app.get('/', (req, res) => {
-  console.log(res);
-  res.send('Hello Worfdsald');
-});
+app.use(passport.initialize());
