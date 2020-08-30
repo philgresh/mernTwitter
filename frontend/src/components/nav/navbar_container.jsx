@@ -7,4 +7,5 @@ const mapStateToProps = (state) => ({
   loggedIn: state.session.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { logout })(NavBar);
+const NavbarContainer = connect(mapStateToProps, { logout })(NavBar);
+export default NavbarContainer;

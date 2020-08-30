@@ -1,47 +1,51 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import './navbar.css';
+import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { clearSessionErrors } from '../../actions/session_actions';
 
 const Navbar = ({ loggedIn, logout }) => {
+  const dispatch = useDispatch();
   const logoutUser = (e) => {
     e.preventDefault();
-    logout();
+    dispatch(logout());
   };
-
-  // Selectively render links dependent on whether the user is logged in
-  const getLinks = () => {
-    if (loggedIn) {
-      return (
-        <div>
-          <Link to="tweets">All Tweets</Link>
-          <Link to="profile">Profile</Link>
-          <Link to="new_tweet">Write a Tweet</Link>
-          <button onClick={logoutUser} type="button">
-            Logout
-          </button>
-        </div>
-      );
-    }
+  const handleAlt = () => {
+    dispatch(clearSessionErrors());
+  };
+  const Links = () => {
     return (
-      <div>
-        <Link to="signup">Signup</Link>
-        <Link to="login">Login</Link>
-      </div>
+      <>
+        {loggedIn ? (
+          <nav>
+            <div className="nav-left">
+              <NavLink to="/tweets">Tweets</NavLink>
+              <NavLink to="/new_tweet">New Tweet</NavLink>
+              <NavLink to="/profile">Profile</NavLink>
+            </div>
+            <button type="button" className="nav-right" onClick={logoutUser}>
+              Logout
+            </button>
+          </nav>
+        ) : (
+          <nav>
+            <NavLink to="/signup" onClick={handleAlt}>
+              Sign Up
+            </NavLink>
+            <NavLink to="/login" onClick={handleAlt}>
+              Log In
+            </NavLink>
+          </nav>
+        )}
+      </>
     );
   };
 
   return (
-    <div>
-      <h1>Chirper</h1>
-      {getLinks()}
-    </div>
+    <header>
+      <Links />
+    </header>
   );
-};
-
-Navbar.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired,
 };
 
 export default Navbar;
