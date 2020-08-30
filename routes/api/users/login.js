@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../../../models/User');
 const keys = require('../../../config/keys');
-const { validateLoginInput } = require('./utils');
+const { validateLoginInput } = require('../validation/user');
 
 const login = (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);

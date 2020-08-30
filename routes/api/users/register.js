@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../../../models/User');
 const keys = require('../../../config/keys');
-const { validateRegisterInput } = require('./utils');
+const { validateRegisterInput } = require('../validation/user');
 
 const register = (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
